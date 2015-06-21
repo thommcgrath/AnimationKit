@@ -1,0 +1,25 @@
+site_name: Animation Kit
+pages:
+- Home: 'index.md'
+- Tasks: [
+{AnimationKit.Task: 'AnimationKit.Task.md'},
+{AnimationKit.MoveTask: 'AnimationKit.MoveTask.md'},
+{AnimationKit.ScrollTask: 'AnimationKit.ScrollTask.md'},
+{AnimationKit.FrameTask: 'AnimationKit.FrameTask.md'},
+{AnimationKit.ValueTask: 'AnimationKit.ValueTask.md'}
+]
+- Interfaces: [
+{AnimationKit.ValueAnimator: 'AnimationKit.ValueAnimator.md'},
+{AnimationKit.Scrollable: 'AnimationKit.Scrollable.md'},
+{AnimationKit.FrameTarget: 'AnimationKit.FrameTarget.md'}
+]
+- Classes: [
+{AnimationKit.Curve: 'AnimationKit.Curve.md'},
+{AnimationKit.Frame: 'AnimationKit.Frame.md'},
+{AnimationKit.FrameSet: 'AnimationKit.FrameSet.md'},
+{AnimationKit.Coordinator: 'AnimationKit.Coordinator.md'}
+]
+- Migrating: 'Migrating.md'
+- Version History: 'History.md'
+theme: mkdocs
+include_next_prev: false
