@@ -27,6 +27,40 @@ Inherits AnimationKit.Task
 	#tag EndEvent
 
 
+	#tag Method, Flags = &h21, CompatibilityFlags = (TargetDesktop and (Target32Bit or Target64Bit))
+		Private Sub ApplyRect(Target As DesktopUIControl, Rect As Xojo.Core.Rect)
+		  If Self.AnimateLeft Then
+		    Target.Left = Rect.Left
+		  End If
+		  If Self.AnimateTop Then
+		    Target.Top = Rect.Top
+		  End If
+		  If Self.AnimateWidth Then
+		    Target.Width = Rect.Width
+		  End If
+		  If Self.AnimateHeight Then
+		    Target.Height = Rect.Height
+		  End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h21, CompatibilityFlags = (TargetDesktop and (Target32Bit or Target64Bit))
+		Private Sub ApplyRect(Target As DesktopWindow, Rect As Xojo.Core.Rect)
+		  If Self.AnimateLeft Then
+		    Target.Left = Rect.Left
+		  End If
+		  If Self.AnimateTop Then
+		    Target.Top = Rect.Top
+		  End If
+		  If Self.AnimateWidth Then
+		    Target.Width = Rect.Width
+		  End If
+		  If Self.AnimateHeight Then
+		    Target.Height = Rect.Height
+		  End If
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h21, CompatibilityFlags = (TargetIOS)
 		Private Sub ApplyRect(Target As iOSControl, Rect As Xojo.Core.Rect)
 		  // This is left in as a stub. iOSControl cannot move, so this entire
@@ -96,6 +130,12 @@ Inherits AnimationKit.Task
 		    ElseIf Item IsA RectControl Then
 		      Self.ApplyRect(RectControl(Item), Rect)
 		      Return
+		    ElseIf Item IsA DesktopWindow Then
+		      Self.ApplyRect(DesktopWindow(Item), Rect)
+		      Return
+		    ElseIf Item IsA DesktopUIControl Then
+		      Self.ApplyRect(DesktopUIControl(Item), Rect)
+		      Return
 		    End If
 		  #elseif TargetiOS
 		    If Item IsA iOSControl Then
@@ -106,7 +146,7 @@ Inherits AnimationKit.Task
 		  
 		  Dim Err As New UnsupportedOperationException
 		  #if TargetDesktop
-		    Err.Reason = "Item for AnimationKit.MoveTask must be a Window or RectControl."
+		    Err.Reason = "Item for AnimationKit.MoveTask must be a Window, DesktopWindow, RectControl, or DesktopUIControl."
 		  #elseif TargetiOS
 		    Err.Reason = "Item for AnimationKit.MoveTask must be an iOSControl."
 		  #endif
@@ -124,6 +164,24 @@ Inherits AnimationKit.Task
 		Private Sub Constructor()
 		  Self.Curve = AnimationKit.Curve.CreateFromPreset(AnimationKit.Curve.Presets.Linear)
 		  Self.DurationInSeconds = 1
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0, CompatibilityFlags = (TargetDesktop and (Target32Bit or Target64Bit))
+		Sub Constructor(Target As DesktopUIControl)
+		  Self.Constructor()
+		  Self.StartBounds = Nil
+		  Self.EndBounds = Self.CurrentRect(Target)
+		  Self.Item = Target
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0, CompatibilityFlags = (TargetDesktop and (Target32Bit or Target64Bit))
+		Sub Constructor(Target As DesktopWindow)
+		  Self.Constructor()
+		  Self.StartBounds = Nil
+		  Self.EndBounds = Self.CurrentRect(Target)
+		  Self.Item = Target
 		End Sub
 	#tag EndMethod
 
@@ -167,6 +225,10 @@ Inherits AnimationKit.Task
 		      Return Self.CurrentRect(Window(Item))
 		    ElseIf Item IsA RectControl Then
 		      Return Self.CurrentRect(RectControl(Item))
+		    ElseIf Item IsA DesktopWindow Then
+		      Return Self.CurrentRect(DesktopWindow(Item))
+		    ElseIf Item IsA DesktopUIControl Then
+		      Return Self.CurrentRect(DesktopUIControl(Item))
 		    End If
 		  #elseif TargetiOS
 		    If Item IsA iOSControl Then
@@ -176,11 +238,23 @@ Inherits AnimationKit.Task
 		  
 		  Dim Err As New UnsupportedOperationException
 		  #if TargetDesktop
-		    Err.Reason = "Item for AnimationKit.MoveTask must be a Window or RectControl."
+		    Err.Reason = "Item for AnimationKit.MoveTask must be a Window, DesktopWindow, RectControl, or DesktopUIControl."
 		  #elseif TargetiOS
 		    Err.Reason = "Item for AnimationKit.MoveTask must be an iOSControl."
 		  #endif
 		  Raise Err
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h21, CompatibilityFlags = (TargetDesktop and (Target32Bit or Target64Bit))
+		Private Function CurrentRect(Target As DesktopUIControl) As Xojo.Core.Rect
+		  Return New Xojo.Core.Rect(Target.Left, Target.Top, Target.Width, Target.Height)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h21, CompatibilityFlags = (TargetDesktop and (Target32Bit or Target64Bit))
+		Private Function CurrentRect(Target As DesktopWindow) As Xojo.Core.Rect
+		  Return New Xojo.Core.Rect(Target.Left, Target.Top, Target.Width, Target.Height)
 		End Function
 	#tag EndMethod
 

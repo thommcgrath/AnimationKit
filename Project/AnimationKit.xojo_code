@@ -22,6 +22,54 @@ Protected Module AnimationKit
 	#tag EndMethod
 
 	#tag Method, Flags = &h0, CompatibilityFlags = (TargetHasGUI)
+		Sub Animate(Extends Target As DesktopUIControl, Destination As REALbasic.Rect, DurationInSeconds As Double, Curve As AnimationKit.Curve = Nil)
+		  Dim Task As New AnimationKit.MoveTask(Target)
+		  Task.DurationInSeconds = DurationInSeconds
+		  Task.SetDestination(Destination)
+		  If Curve <> Nil Then
+		    Task.Curve = Curve
+		  End If
+		  Task.Run
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0, CompatibilityFlags = (TargetHasGUI)
+		Sub Animate(Extends Target As DesktopUIControl, Destination As Xojo.Core.Rect, DurationInSeconds As Double, Curve As AnimationKit.Curve = Nil)
+		  Dim Task As New AnimationKit.MoveTask(Target)
+		  Task.DurationInSeconds = DurationInSeconds
+		  Task.SetDestination(Destination)
+		  If Curve <> Nil Then
+		    Task.Curve = Curve
+		  End If
+		  Task.Run
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0, CompatibilityFlags = (TargetHasGUI)
+		Sub Animate(Extends Target As DesktopWindow, Destination As REALbasic.Rect, DurationInSeconds As Double, Curve As AnimationKit.Curve = Nil)
+		  Dim Task As New AnimationKit.MoveTask(Target)
+		  Task.DurationInSeconds = DurationInSeconds
+		  Task.SetDestination(Destination)
+		  If Curve <> Nil Then
+		    Task.Curve = Curve
+		  End If
+		  Task.Run
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0, CompatibilityFlags = (TargetHasGUI)
+		Sub Animate(Extends Target As DesktopWindow, Destination As Xojo.Core.Rect, DurationInSeconds As Double, Curve As AnimationKit.Curve = Nil)
+		  Dim Task As New AnimationKit.MoveTask(Target)
+		  Task.DurationInSeconds = DurationInSeconds
+		  Task.SetDestination(Destination)
+		  If Curve <> Nil Then
+		    Task.Curve = Curve
+		  End If
+		  Task.Run
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0, CompatibilityFlags = (TargetHasGUI)
 		Sub Animate(Extends Target As RectControl, Destination As REALbasic.Rect, DurationInSeconds As Double, Curve As AnimationKit.Curve = Nil)
 		  Dim Task As New AnimationKit.MoveTask(Target)
 		  Task.DurationInSeconds = DurationInSeconds
@@ -78,6 +126,18 @@ Protected Module AnimationKit
 	#tag Method, Flags = &h0
 		Function NewFrameTask(Extends Target As AnimationKit.FrameTarget) As AnimationKit.FrameTask
 		  Return New AnimationKit.FrameTask(Target, New AnimationKit.FrameSet)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0, CompatibilityFlags = (TargetHasGUI)
+		Function NewMoveTask(Extends Target As DesktopUIControl) As AnimationKit.MoveTask
+		  Return New AnimationKit.MoveTask(Target)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0, CompatibilityFlags = (TargetHasGUI)
+		Function NewMoveTask(Extends Target As DesktopWindow) As AnimationKit.MoveTask
+		  Return New AnimationKit.MoveTask(Target)
 		End Function
 	#tag EndMethod
 
